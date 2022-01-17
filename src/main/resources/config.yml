@@ -1,0 +1,12 @@
+particle:
+  type: ENCHANTMENT_TABLE
+  count: 25
+  offset-x: 0.35
+  offset-y: 0.5
+  offset-z: 0.35
+  extra: 0
+sound:
+  enabled: true
+  type: ENTITY_ENDERMEN_TELEPORT
+  volume: 0.25
+  pitch: 1

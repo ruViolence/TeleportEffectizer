@@ -1,0 +1,3 @@
+name: TeleportEffectizer
+main: ru.violence.teleporteffectizer.TeleportEffectizerPlugin
+version: ${project.version}
