@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class TeleportEffectizerPlugin extends JavaPlugin implements Listener {
+    private double radius;
     private Particle particleType;
     private int particleCount;
     private double particleOffsetX;
@@ -47,6 +48,7 @@ public class TeleportEffectizerPlugin extends JavaPlugin implements Listener {
     }
 
     private void reloadPlugin() {
+        radius = getConfig().getDouble("radius");
         particleType = Particle.valueOf(getConfig().getString("particle.type"));
         particleCount = getConfig().getInt("particle.count");
         particleOffsetX = getConfig().getDouble("particle.offset-x");
@@ -110,10 +112,15 @@ public class TeleportEffectizerPlugin extends JavaPlugin implements Listener {
 
         y += 1;
         World world = player.getWorld();
+        Location loc = new Location(world, x, y, z);
 
-        world.spawnParticle(particleType, x, y, z, particleCount, particleOffsetX, particleOffsetY, particleOffsetZ, particleExtra, null);
-        if (soundEnabled) {
-            world.playSound(new Location(world, x, y, z), soundType, soundVolume, soundPitch);
+        for (Player receiver : world.getNearbyPlayers(loc, radius)) {
+            if (!receiver.canSee(player)) continue;
+
+            receiver.spawnParticle(particleType, x, y, z, particleCount, particleOffsetX, particleOffsetY, particleOffsetZ, particleExtra, null);
+            if (soundEnabled) {
+                receiver.playSound(loc, soundType, soundVolume, soundPitch);
+            }
         }
     }
 

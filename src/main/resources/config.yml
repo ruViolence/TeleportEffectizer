@@ -1,3 +1,4 @@
+radius: 16
 particle:
   type: ENCHANTMENT_TABLE
   count: 25
