@@ -1,4 +1,5 @@
 radius: 16
+ignore-sender: false
 particle:
   type: ENCHANTMENT_TABLE
   count: 25

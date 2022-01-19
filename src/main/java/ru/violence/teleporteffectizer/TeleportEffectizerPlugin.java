@@ -26,6 +26,7 @@ import java.util.UUID;
 
 public class TeleportEffectizerPlugin extends JavaPlugin implements Listener {
     private double radius;
+    private boolean ignoreSender;
     private Particle particleType;
     private int particleCount;
     private double particleOffsetX;
@@ -49,6 +50,7 @@ public class TeleportEffectizerPlugin extends JavaPlugin implements Listener {
 
     private void reloadPlugin() {
         radius = getConfig().getDouble("radius");
+        ignoreSender = getConfig().getBoolean("ignore-sender");
         particleType = Particle.valueOf(getConfig().getString("particle.type"));
         particleCount = getConfig().getInt("particle.count");
         particleOffsetX = getConfig().getDouble("particle.offset-x");
@@ -115,6 +117,7 @@ public class TeleportEffectizerPlugin extends JavaPlugin implements Listener {
         Location loc = new Location(world, x, y, z);
 
         for (Player receiver : world.getNearbyPlayers(loc, radius)) {
+            if (receiver == player && ignoreSender) continue;
             if (!receiver.canSee(player)) continue;
 
             receiver.spawnParticle(particleType, x, y, z, particleCount, particleOffsetX, particleOffsetY, particleOffsetZ, particleExtra, null);
